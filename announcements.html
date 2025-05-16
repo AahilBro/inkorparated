@@ -1,0 +1,25 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1" />
+  <title>Pen Hub - Announcements</title>
+  <link rel="stylesheet" href="style.css" />
+</head>
+<body>
+  <div class="container">
+    <h2>📢 Announcements</h2>
+    
+    <div id="announcement-list">Loading announcements...</div>
+    
+    <div id="announcement-form" style="display:none; margin-top: 20px;">
+      <h3>Add / Edit Announcement</h3>
+      <input type="text" id="announcement-title" class="input" placeholder="Title" />
+      <textarea id="announcement-text" class="input" rows="4" placeholder="Announcement text"></textarea>
+      <button class="glow-btn" id="save-announcement">Save Announcement</button>
+    </div>
+  </div>
+
+  <script type="module" src="announcements.js"></script>
+</body>
+</html>
