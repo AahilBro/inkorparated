@@ -1,0 +1,33 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Pen Hub</title>
+  <link rel="stylesheet" href="style.css">
+</head>
+<body>
+  <div class="container">
+    <h1>Welcome to the Pen Hub 🖊️</h1>
+    <nav>
+      <button class="tab-btn" onclick="showTab('laws')">📜 Laws</button>
+      <button class="tab-btn" onclick="showTab('news')">📰 News</button>
+      <button class="tab-btn" onclick="showTab('chat')">💬 Chat</button>
+      <button class="tab-btn" onclick="showTab('announcements')">📢 Announcements</button>
+      <button class="tab-btn" onclick="showTab('dictionary')">📖 Pen Dictionary</button>
+    </nav>
+
+    <div id="laws" class="tab-content">Loading Laws...</div>
+    <div id="news" class="tab-content" style="display:none;">Loading News...</div>
+    <div id="chat" class="tab-content" style="display:none;">
+      <div id="chat-messages"></div>
+      <input id="chat-input" placeholder="Type a message...">
+      <button onclick="sendMessage()">Send</button>
+    </div>
+    <div id="announcements" class="tab-content" style="display:none;">Loading Announcements...</div>
+    <div id="dictionary" class="tab-content" style="display:none;">Loading Pen Dictionary...</div>
+  </div>
+
+  <script type="module" src="hub.js"></script>
+</body>
+</html>
