@@ -1,16 +1,16 @@
 <!DOCTYPE html>
 <html lang="en">
 <head>
-  <meta charset="UTF-8">
-  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1" />
   <title>Pen Hub</title>
-  <link rel="stylesheet" href="style.css">
+  <link rel="stylesheet" href="style.css" />
 </head>
 <body>
   <div class="container">
     <h1>Welcome to the Pen Hub 🖊️</h1>
     <nav>
-      <button class="tab-btn" onclick="showTab('laws')">📜 Laws</button>
+      <button class="tab-btn active" onclick="showTab('laws')">📜 Laws</button>
       <button class="tab-btn" onclick="showTab('news')">📰 News</button>
       <button class="tab-btn" onclick="showTab('chat')">💬 Chat</button>
       <button class="tab-btn" onclick="showTab('announcements')">📢 Announcements</button>
@@ -20,14 +20,19 @@
     <div id="laws" class="tab-content">Loading Laws...</div>
     <div id="news" class="tab-content" style="display:none;">Loading News...</div>
     <div id="chat" class="tab-content" style="display:none;">
-      <div id="chat-messages"></div>
-      <input id="chat-input" placeholder="Type a message...">
-      <button onclick="sendMessage()">Send</button>
+      <div id="chat-messages" class="chat-messages"></div>
+      <div class="chat-input-container">
+        <input id="chat-input" placeholder="Type a message..." />
+        <button id="chat-send-btn" onclick="sendMessage()">Send</button>
+      </div>
     </div>
     <div id="announcements" class="tab-content" style="display:none;">Loading Announcements...</div>
     <div id="dictionary" class="tab-content" style="display:none;">Loading Pen Dictionary...</div>
   </div>
 
   <script type="module" src="hub.js"></script>
+</body>
+</html>
+
 </body>
 </html>
