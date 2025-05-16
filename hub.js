@@ -1,8 +1,19 @@
 // hub.js
 import { initializeApp } from "https://www.gstatic.com/firebasejs/10.12.0/firebase-app.js";
-import { getFirestore, doc, getDoc, setDoc, onSnapshot, collection, addDoc, serverTimestamp } from "https://www.gstatic.com/firebasejs/10.12.0/firebase-firestore.js";
+import {
+  getFirestore,
+  doc,
+  getDoc,
+  setDoc,
+  onSnapshot,
+  collection,
+  addDoc,
+  serverTimestamp
+} from "https://www.gstatic.com/firebasejs/10.12.0/firebase-firestore.js";
+
 import { getAuth, onAuthStateChanged } from "https://www.gstatic.com/firebasejs/10.12.0/firebase-auth.js";
 
+// Firebase config
 const firebaseConfig = {
   apiKey: "AIzaSyC9Y4hjZ3Xzp3nhO6IHKyvlyi7miwcbAQM",
   authDomain: "inkorparated-d3048.firebaseapp.com",
@@ -19,30 +30,31 @@ const auth = getAuth(app);
 
 let currentUser = null;
 
-onAuthStateChanged(auth, user => {
-  if (user) {
-    currentUser = user;
-    loadTabs();
-  } else {
-    alert("Not logged in. Please go to the login page.");
-    window.location.href = "/index.html";
+// Show selected tab and hide others
+window.showTab = function (tabId) {
+  document.querySelectorAll('.tab-content').forEach(tab => {
+    tab.style.display = 'none';
+  });
+
+  const selectedTab = document.getElementById(tabId);
+  if (selectedTab) {
+    selectedTab.style.display = 'block';
   }
-});
+};
 
-function showTab(tabId) {
-  document.querySelectorAll('.tab-content').forEach(tab => tab.style.display = 'none');
-  document.getElementById(tabId).style.display = 'block';
-}
-
+// Load tab content from Firestore
 function loadTabs() {
-  const tabs = ['laws', 'news', 'announcements', 'dictionary'];
-  tabs.forEach(tab => {
+  const staticTabs = ['laws', 'news', 'announcements', 'dictionary'];
+
+  staticTabs.forEach(tab => {
     const docRef = doc(db, tab, "main");
-    onSnapshot(docRef, (docSnap) => {
+    onSnapshot(docRef, docSnap => {
+      const el = document.getElementById(tab);
+      if (!el) return;
       if (docSnap.exists()) {
-        document.getElementById(tab).innerText = docSnap.data().text || `No ${tab} available.`;
+        el.innerText = docSnap.data().text || `No ${tab} data available.`;
       } else {
-        document.getElementById(tab).innerText = `No ${tab} available.`;
+        el.innerText = `No ${tab} data available.`;
       }
     });
   });
@@ -51,6 +63,7 @@ function loadTabs() {
   const chatRef = collection(db, 'chat');
   onSnapshot(chatRef, snapshot => {
     const chatMessages = document.getElementById("chat-messages");
+    if (!chatMessages) return;
     chatMessages.innerHTML = "";
     snapshot.forEach(doc => {
       const data = doc.data();
@@ -61,6 +74,7 @@ function loadTabs() {
   });
 }
 
+// Send chat message
 window.sendMessage = async function () {
   const input = document.getElementById("chat-input");
   const message = input.value.trim();
@@ -72,5 +86,18 @@ window.sendMessage = async function () {
     message,
     timestamp: serverTimestamp()
   });
+
   input.value = "";
 };
+
+// Auth check and init
+onAuthStateChanged(auth, user => {
+  if (user) {
+    currentUser = user;
+    loadTabs();
+    showTab('laws'); // Show default tab on load
+  } else {
+    alert("Not logged in. Please go to the login page.");
+    window.location.href = "/index.html";
+  }
+});
