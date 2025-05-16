@@ -1,10 +1,7 @@
-// Import Firebase functions
 import { initializeApp } from "firebase/app";
-import { getAnalytics } from "firebase/analytics";
 import { getAuth, GoogleAuthProvider, signInWithPopup } from "firebase/auth";
-import { getFirestore, doc, setDoc, getDoc } from "firebase/firestore";
+import { getFirestore, doc, setDoc } from "firebase/firestore";
 
-// Firebase config
 const firebaseConfig = {
   apiKey: "AIzaSyC9Y4hjZ3Xzp3nhO6IHKyvlyi7miwcbAQM",
   authDomain: "inkorparated-d3048.firebaseapp.com",
@@ -15,55 +12,33 @@ const firebaseConfig = {
   measurementId: "G-QTGWC06G7X"
 };
 
-// Initialize Firebase
 const app = initializeApp(firebaseConfig);
-const analytics = getAnalytics(app);
 const auth = getAuth(app);
-const provider = new GoogleAuthProvider();
 const db = getFirestore(app);
+const provider = new GoogleAuthProvider();
 
-// UI Elements
-const loginBtn = document.getElementById("login-btn");
-const loginScreen = document.getElementById("login-screen");
-const penNameScreen = document.getElementById("penname-screen");
-const penNameInput = document.getElementById("penname-input");
-const sitePassInput = document.getElementById("sitepass-input");
-const submitBtn = document.getElementById("submit-btn");
+let userDisplayName = "";
 
-let userData = null;
-
-// Login with Google
-loginBtn.addEventListener("click", async () => {
-  try {
-    const result = await signInWithPopup(auth, provider);
-    userData = result.user;
-    loginScreen.style.display = "none";
-    penNameScreen.style.display = "block";
-  } catch (error) {
-    console.error("Login error:", error);
-  }
+document.getElementById("login-btn").addEventListener("click", () => {
+  signInWithPopup(auth, provider)
+    .then((result) => {
+      userDisplayName = result.user.displayName;
+      document.getElementById("login-screen").style.display = "none";
+      document.getElementById("penname-screen").style.display = "block";
+    });
 });
 
-// Submit Pen Name and Password
-submitBtn.addEventListener("click", async () => {
-  const penName = penNameInput.value;
-  const sitePass = sitePassInput.value;
+document.getElementById("submit-btn").addEventListener("click", async () => {
+  const penname = document.getElementById("penname-input").value.trim();
+  const password = document.getElementById("sitepass-input").value.trim();
 
-  if (sitePass !== "ink") {
-    alert("Wrong password!");
-    return;
+  if (password === "ink" && penname !== "") {
+    await setDoc(doc(db, "users", userDisplayName), {
+      penName: penname,
+      displayName: userDisplayName
+    });
+    window.location.href = "/hub.html";
+  } else {
+    alert("Wrong password or missing pen name!");
   }
-
-  if (penName.length < 2) {
-    alert("Pen name too short!");
-    return;
-  }
-
-  await setDoc(doc(db, "users", userData.uid), {
-    displayName: userData.displayName,
-    penName: penName,
-    uid: userData.uid
-  });
-
-  window.location.href = "/hub.html";
 });
