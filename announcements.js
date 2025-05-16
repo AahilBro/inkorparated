@@ -6,12 +6,13 @@ import { getAuth, onAuthStateChanged } from "firebase/auth";
 
 // Your Firebase config here (make sure to update it)
 const firebaseConfig = {
-  apiKey: "YOUR_API_KEY",
-  authDomain: "YOUR_AUTH_DOMAIN",
-  projectId: "YOUR_PROJECT_ID",
-  storageBucket: "YOUR_STORAGE_BUCKET",
-  messagingSenderId: "YOUR_MESSAGING_SENDER_ID",
-  appId: "YOUR_APP_ID",
+   apiKey: "AIzaSyC9Y4hjZ3Xzp3nhO6IHKyvlyi7miwcbAQM",
+  authDomain: "inkorparated-d3048.firebaseapp.com",
+  projectId: "inkorparated-d3048",
+  storageBucket: "inkorparated-d3048.firebasestorage.app",
+  messagingSenderId: "47204320585",
+  appId: "1:47204320585:web:104fff16052b9e032ec698",
+  measurementId: "G-QTGWC06G7X"
 };
 
 const app = initializeApp(firebaseConfig);
