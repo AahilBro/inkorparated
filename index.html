@@ -2,41 +2,25 @@
 <html lang="en">
 <head>
   <meta charset="UTF-8" />
-  <meta name="viewport" content="width=device-width, initial-scale=1" />
-  <title>Inkorparated Pen Hub</title>
-  <link rel="stylesheet" href="styles.css" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0"/>
+  <title>Pen Hub Login</title>
+  <link rel="stylesheet" href="style.css" />
 </head>
 <body>
-  <div id="login-section" class="centered">
-    <button id="google-login-btn" class="glow-btn">Login with Google</button>
-  </div>
+  <div class="container">
+    <div id="login-screen">
+      <h1>Welcome to Pen Hub 🖊️</h1>
+      <button id="login-btn" class="glow-btn">Login with Google</button>
+    </div>
 
-  <div id="penname-section" class="centered hidden">
-    <h2>Enter Your Pen Name and Site Password</h2>
-    <input type="text" id="pen-name" placeholder="Pen Name" />
-    <input type="password" id="site-password" placeholder="Site Password" />
-    <button id="submit-penname" class="glow-btn">Enter Pen Hub</button>
-    <p id="error-msg" class="error"></p>
-  </div>
-
-  <div id="hub-section" class="hidden">
-    <h1>Welcome to the Pen Hub, <span id="display-penname"></span>!</h1>
-    <nav>
-      <button class="tab-btn glow-btn" data-tab="laws">Law Tab</button>
-      <button class="tab-btn glow-btn" data-tab="news">News Tab</button>
-      <button class="tab-btn glow-btn" data-tab="chat">Chat Tab</button>
-      <button class="tab-btn glow-btn" data-tab="announcements">Announcements Tab</button>
-      <button class="tab-btn glow-btn" data-tab="dictionary">Pen Dictionary Tab</button>
-    </nav>
-
-    <div id="tab-content">
-      <p>Select a tab to see content.</p>
+    <div id="penname-screen" style="display: none;">
+      <h2>Enter Your Pen Identity</h2>
+      <input id="penname-input" placeholder="Pen Name" class="input" />
+      <input id="sitepass-input" placeholder="Site Password" type="password" class="input" />
+      <button id="submit-btn" class="glow-btn">Enter Pen Hub</button>
     </div>
   </div>
 
-  <script src="https://www.gstatic.com/firebasejs/9.23.0/firebase-app-compat.js"></script>
-  <script src="https://www.gstatic.com/firebasejs/9.23.0/firebase-auth-compat.js"></script>
-  <script src="https://www.gstatic.com/firebasejs/9.23.0/firebase-firestore-compat.js"></script>
-  <script src="app.js"></script>
+  <script type="module" src="app.js"></script>
 </body>
 </html>
