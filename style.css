@@ -1,63 +1,60 @@
 body {
-  font-family: Arial, sans-serif;
-  background: #121212;
-  color: #eee;
-  margin: 0; padding: 0;
+  margin: 0;
+  font-family: 'Segoe UI', sans-serif;
+  background-color: #0d1117;
+  color: #f0f6fc;
   display: flex;
-  flex-direction: column;
-  align-items: center;
-  min-height: 100vh;
-}
-
-.centered {
-  display: flex;
-  flex-direction: column;
-  align-items: center;
   justify-content: center;
-  margin-top: 5rem;
+  align-items: center;
+  height: 100vh;
 }
 
-.hidden {
-  display: none;
+.container {
+  text-align: center;
+  padding: 40px;
+  background: #161b22;
+  border-radius: 16px;
+  box-shadow: 0 0 30px rgba(0, 123, 255, 0.2);
+  max-width: 400px;
+  width: 90%;
 }
 
-input {
-  padding: 0.5rem;
-  margin: 0.5rem 0;
-  border-radius: 6px;
-  border: none;
-  width: 200px;
+h1, h2 {
+  color: #58a6ff;
 }
 
-.error {
-  color: #ff5555;
-  margin-top: 0.5rem;
+.input {
+  display: block;
+  width: 100%;
+  padding: 12px;
+  margin: 12px 0;
+  background: #0d1117;
+  border: 1px solid #30363d;
+  border-radius: 8px;
+  color: white;
+  font-size: 1em;
 }
 
-nav {
-  margin-top: 1rem;
+.input:focus {
+  outline: none;
+  border-color: gold;
+  box-shadow: 0 0 12px gold;
 }
 
-nav button {
-  margin: 0 0.5rem;
-}
-
-/* Glowing Button Animation */
 .glow-btn {
-  background: #222;
-  border: 2px solid #0ff;
-  color: #0ff;
-  padding: 0.7rem 1.5rem;
-  border-radius: 12px;
+  padding: 12px 20px;
+  font-size: 1em;
+  border: none;
+  border-radius: 8px;
+  color: white;
+  background: linear-gradient(145deg, #007bff, #0056d2);
+  box-shadow: 0 0 15px rgba(0, 123, 255, 0.6);
+  transition: 0.3s ease;
   cursor: pointer;
-  font-weight: bold;
-  transition: box-shadow 0.3s ease;
 }
 
 .glow-btn:hover {
-  box-shadow:
-    0 0 5px #0ff,
-    0 0 15px #0ff,
-    0 0 30px #0ff,
-    0 0 40px #0ff;
+  box-shadow: 0 0 25px gold, 0 0 40px rgba(0, 123, 255, 0.8);
+  background: linear-gradient(145deg, gold, #007bff);
+  transform: scale(1.05);
 }
