@@ -1,0 +1,25 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1" />
+  <title>Pen Hub - Pen Dictionary</title>
+  <link rel="stylesheet" href="style.css" />
+</head>
+<body>
+  <div class="container">
+    <h2>📖 Pen Dictionary</h2>
+
+    <div id="dictionary-list">Loading dictionary...</div>
+
+    <div id="dictionary-form" style="display:none; margin-top: 20px;">
+      <h3>Add New Word</h3>
+      <input type="text" id="word" class="input" placeholder="Word" />
+      <textarea id="definition" class="input" rows="4" placeholder="Definition"></textarea>
+      <button class="glow-btn" id="save-word">Add Word</button>
+    </div>
+  </div>
+
+  <script type="module" src="pendictionary.js"></script>
+</body>
+</html>
