@@ -1,0 +1,24 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1" />
+  <title>Pen Hub - News</title>
+  <link rel="stylesheet" href="style.css" />
+</head>
+<body>
+  <div class="container">
+    <h1>📰 News Tab</h1>
+    <div id="news-list">Loading news...</div>
+
+    <!-- Only visible if logged in as "Aahil Jawad" -->
+    <div id="news-editor" style="display:none; margin-top: 20px;">
+      <input type="text" id="news-title" class="input" placeholder="News Title" />
+      <textarea id="news-content" class="input" placeholder="News Content"></textarea>
+      <button class="glow-btn" id="add-news-btn">Add / Update News</button>
+    </div>
+  </div>
+
+  <script type="module" src="news.js"></script>
+</body>
+</html>
