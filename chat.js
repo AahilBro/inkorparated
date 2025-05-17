@@ -1,6 +1,10 @@
-// chat.js
 import { initializeApp } from "https://www.gstatic.com/firebasejs/10.1.0/firebase-app.js";
-import { getFirestore, collection, addDoc, query, orderBy, onSnapshot, serverTimestamp } from "https://www.gstatic.com/firebasejs/10.1.0/firebase-firestore.js";
+import {
+  getFirestore, collection, addDoc, query, orderBy, onSnapshot, serverTimestamp, doc, getDoc
+} from "https://www.gstatic.com/firebasejs/10.1.0/firebase-firestore.js";
+import {
+  getAuth, onAuthStateChanged
+} from "https://www.gstatic.com/firebasejs/10.1.0/firebase-auth.js";
 
 const firebaseConfig = {
   apiKey: "AIzaSyC9Y4hjZ3Xzp3nhO6IHKyvlyi7miwcbAQM",
@@ -14,42 +18,66 @@ const firebaseConfig = {
 
 const app = initializeApp(firebaseConfig);
 const db = getFirestore(app);
+const auth = getAuth();
 
 const chatMessages = document.getElementById("chatMessages");
 const chatInput = document.getElementById("chatInput");
 const sendBtn = document.getElementById("sendBtn");
 
-// Show messages function
-function showMessage(data) {
-  const div = document.createElement("div");
-  div.classList.add("message");
-  div.textContent = `${data.penName || "Anon"}: ${data.message}`;
-  chatMessages.appendChild(div);
-  chatMessages.scrollTop = chatMessages.scrollHeight;
-}
+let userPenName = null;
 
-// Load messages live
-const q = query(collection(db, "chatMessages"), orderBy("timestamp"));
-onSnapshot(q, (snapshot) => {
-  chatMessages.innerHTML = ""; // clear messages first
-  snapshot.forEach(doc => {
-    showMessage(doc.data());
-  });
+// 👤 Wait for user login
+onAuthStateChanged(auth, async (user) => {
+  if (!user) {
+    alert("You're not logged in!");
+    window.location.href = "index.html"; // redirect to login page
+    return;
+  }
+
+  try {
+    const userDoc = await getDoc(doc(db, "users", user.uid));
+    if (!userDoc.exists()) {
+      alert("Pen Name not set! Go back and set it up.");
+      return;
+    }
+
+    userPenName = userDoc.data().penName || "Anon";
+
+    // ✅ Now start listening to chat
+    const q = query(collection(db, "chatMessages"), orderBy("timestamp"));
+    onSnapshot(q, (snapshot) => {
+      chatMessages.innerHTML = ""; // clear messages
+      snapshot.forEach(doc => {
+        const data = doc.data();
+        const div = document.createElement("div");
+        div.textContent = `${data.penName || "Anon"}: ${data.message}`;
+        chatMessages.appendChild(div);
+      });
+      chatMessages.scrollTop = chatMessages.scrollHeight;
+    });
+
+  } catch (error) {
+    console.error("Error loading user data:", error);
+    alert("Something went wrong loading your user data.");
+  }
 });
 
-// Send new message
+// 📨 Send messages
 sendBtn.onclick = async () => {
   const message = chatInput.value.trim();
   if (!message) return alert("Type a message first!");
+  if (!userPenName) return alert("Pen Name not loaded!");
 
-  // You can set penName however you want, here it’s a simple example:
-  const penName = prompt("Enter your Pen Name") || "Anon";
+  try {
+    await addDoc(collection(db, "chatMessages"), {
+      message,
+      penName: userPenName,
+      timestamp: serverTimestamp(),
+    });
 
-  await addDoc(collection(db, "chatMessages"), {
-    message,
-    penName,
-    timestamp: serverTimestamp(),
-  });
-
-  chatInput.value = "";
+    chatInput.value = "";
+  } catch (err) {
+    console.error("Error sending message:", err);
+    alert("Failed to send message.");
+  }
 };
