@@ -43,23 +43,17 @@ onAuthStateChanged(auth, async (user) => {
 
     userPenName = userDoc.data().penName || "Anon";
 
-    // ✅ Now start listening to chat
-    const q = query(collection(db, "chatMessages"), orderBy("timestamp"));
-    onSnapshot(q, (snapshot) => {
-      chatMessages.innerHTML = ""; // clear messages
-      snapshot.forEach(doc => {
-        const data = doc.data();
-        const div = document.createElement("div");
-        div.textContent = `${data.penName || "Anon"}: ${data.message}`;
-        chatMessages.appendChild(div);
-      });
-      chatMessages.scrollTop = chatMessages.scrollHeight;
-    });
-
-  } catch (error) {
-    console.error("Error loading user data:", error);
-    alert("Something went wrong loading your user data.");
-  }
+// ✅ Now start listening to chat
+const q = query(collection(db, "chat"), orderBy("timestamp"));
+onSnapshot(q, (snapshot) => {
+  chatMessages.innerHTML = ""; // clear messages
+  snapshot.forEach(doc => {
+    const data = doc.data();
+    const div = document.createElement("div");
+    div.textContent = `${data.penName || "Anon"}: ${data.message}`;
+    chatMessages.appendChild(div);
+  });
+  chatMessages.scrollTop = chatMessages.scrollHeight;
 });
 
 // 📨 Send messages
@@ -69,7 +63,7 @@ sendBtn.onclick = async () => {
   if (!userPenName) return alert("Pen Name not loaded!");
 
   try {
-    await addDoc(collection(db, "chatMessages"), {
+    await addDoc(collection(db, "chat"), {
       message,
       penName: userPenName,
       timestamp: serverTimestamp(),
